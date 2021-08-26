@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using WorkPlanning.Domain.Entities;
 
@@ -9,9 +10,10 @@ namespace WorkPlanning.Domain.Interfaces
         Task AddWorker(Worker worker);
         Task<List<Worker>> GetWorkers();
         Task<Worker> GetWorkerById(string id);
+        Task<List<Worker>> GetShiftsByDay(DateTime date);
         Task RemoveWorker(string id);
         Task AddShift(Shift shift, Worker worker);
         Task RemoveShift(Worker shiftId, string workerId);
-        Task<Worker> GetWorkerByPersonalId(string personalId);
+        Task<Worker> GetWorkerByPersonalId(string personalId); 
     }
 }

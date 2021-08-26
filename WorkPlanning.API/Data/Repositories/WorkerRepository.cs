@@ -1,7 +1,10 @@
 ﻿using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using WorkPlanning.API.Data.Context;
+using WorkPlanning.API.Helpers;
 using WorkPlanning.Domain.Entities;
 using WorkPlanning.Domain.Interfaces;
 
@@ -37,6 +40,19 @@ namespace WorkPlanning.Data.Repositories
         public async Task<Worker> GetWorkerByPersonalId(string personalId)
         {
             return await _workers.Find(w => w.PersonalId == personalId).FirstOrDefaultAsync();
+        }
+
+        public async Task<List<Worker>> GetShiftsByDay(DateTime date)
+        {
+            var dateMaxTime = DateTimeHelper.GetDateMaxTime(date);
+
+            var workers = await _workers.Find(w => w.Shifts.Any(s => s.StartTime >= date && s.StartTime <= dateMaxTime))
+                .ToListAsync();
+
+            foreach (var worker in workers)
+                worker.Shifts = worker.Shifts.Where(x => x.StartTime.Date == date).ToList();
+
+            return workers;
         }
 
         public async Task RemoveWorker(string id)

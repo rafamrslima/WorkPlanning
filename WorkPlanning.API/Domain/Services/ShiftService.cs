@@ -37,6 +37,8 @@ namespace WorkPlanning.Domain.Services
             return worker;
         }
 
+        public async Task<List<Worker>> GetShiftsByDay(DateTime date) => await _workerRepository.GetShiftsByDay(date);
+
         public async Task RemoveShift(string workerId, string shiftId)
         {
             var workerDb = await GetWorkerById(workerId);
@@ -48,8 +50,8 @@ namespace WorkPlanning.Domain.Services
                 throw new KeyNotFoundException("Shift not found.");
 
             await _workerRepository.RemoveShift(workerDb, shiftId);
-
         }
-        public async Task<Worker> GetWorkerById(string id)  => await _workerRepository.GetWorkerById(id); 
+
+        public async Task<Worker> GetWorkerById(string id)  => await _workerRepository.GetWorkerById(id);
     }
 }
