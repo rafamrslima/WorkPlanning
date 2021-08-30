@@ -12,5 +12,6 @@ The API serve as Work Planning Service, where you can register workers and their
 * Add Shift.
 * Get List of workers.
 * Get Shifts by worker.
+* Get Shifts by day.
 * Remove worker.
 * Remove shift.
